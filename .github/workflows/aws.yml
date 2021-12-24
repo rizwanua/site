@@ -66,6 +66,12 @@ jobs:
             --build-arg AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
             --build-arg AWS_DEFAULT_REGION="${{ secrets.AWS_DEFAULT_REGION }}" \
             --build-arg SECRET_KEY="${{ secrets.SECRET_KEY }}" \
+            --build-arg ADMINS="${{ secrets.ADMINS }}" \
+            --build-arg MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}" \
+            --build-arg MAIL_PORT="${{ secrets.MAIL_PORT }}" \
+            --build-arg MAIL_SERVER="${{ secrets.MAIL_SERVER }}" \
+            --build-arg MAIL_USERNAME="${{ secrets.MAIL_USERNAME }}" \
+            --build-arg MAIL_USE_TLS="${{ secrets.MAIL_USE_TLS }}" \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
