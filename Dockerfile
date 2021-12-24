@@ -11,8 +11,7 @@ RUN venv/bin/pip install gunicorn
 
 COPY appPkg appPkg
 COPY migrations migrations
-COPY stockpricealert.py config.py boot.sh ./
-RUN chmod +x boot.sh
+COPY stockpricealert.py config.py 
 
 ENV FLASK_APP stockpricealert.py
 
