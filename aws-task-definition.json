@@ -26,7 +26,7 @@
       "secrets": null,
       "dockerSecurityOptions": null,
       "memory": null,
-      "memoryReservation": 500,
+      "memoryReservation": 1000,
       "volumesFrom": [],
       "stopTimeout": null,
       "image": "132218450533.dkr.ecr.us-east-2.amazonaws.com/aws-ecs-spa-ecr",
@@ -56,7 +56,7 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-east-2:132218450533:task-definition/aws-ecs-spa-task-definition:1",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-2:132218450533:task-definition/aws-ecs-spa-task-definition:3",
   "family": "aws-ecs-spa-task-definition",
   "requiresAttributes": [
     {
@@ -91,7 +91,7 @@
   "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 1,
+  "revision": 3,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
