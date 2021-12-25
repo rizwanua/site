@@ -2,7 +2,7 @@ from appPkg import db
 from appPkg.main import bp
 from appPkg.models import Stock
 from flask import render_template, flash, redirect, url_for, current_app, request, session
-from appPkg.main.forms import SelectStockForm, EnterPriceForm, UserStocksTable, DeleteStockForm
+from appPkg.main.forms import SelectStockForm, EnterPriceForm, DeleteStockForm
 from datetime import datetime, timedelta
 from flask_login import current_user, login_required
 from appPkg.models import User, Stock, alertTracker
@@ -22,30 +22,23 @@ def manage_alerts(userid):
     formSelectStock = SelectStockForm()
     formDeleteStock = DeleteStockForm()
     userAlertCounts = alertTracker.query.filter_by(userID=current_user.id).count()
-    userStocks = []
+    userStocks = [] 
     
     if userAlertCounts > 0:
         userAlertsDB = alertTracker.query.filter_by(userID=current_user.id)
-        userAlertsList = []
+        strAlertsList = ''
         
         for x in userAlertsDB:
-            stockTicker = Stock.query.filter_by(id=x.stockID).first().symbol 
-            userTable = {
-                "symbol": stockTicker,
-                "status": x.status, 
-                "alertPrice": x.desiredPrice
-            }
+            stockTicker = Stock.query.filter_by(id=x.stockID).first().symbol
+            strAlertsList += '\n- Alert set for ' + str(stockTicker) + ' at $' + str(x.desiredPrice) + '. Current Alert Status: ' + str(x.status)
             userStock = {
                 "alertTrackerID": x.id, 
                 "symbol": stockTicker,
                 "alertPrice": x.desiredPrice
             }
-            
-            userAlertsList.append(userTable)
-            userStocks.append(userStock)
-        table = UserStocksTable(userAlertsList)
+            userStocks.append(userStock) 
     else:
-        table = 'There are currently no stock alerts set for this user.'            
+        strAlertsList = 'There are currently no stock alerts set for this user.'            
         
     if request.method == 'POST':
         if request.form.get('userAddStock'):
@@ -74,7 +67,7 @@ def manage_alerts(userid):
                 allStocks.add(str(x.symbol) + ' - ' + str(x.name))
                 
         return render_template("manage_alerts.html", allStocks = allStocks, formSelectStock=formSelectStock, formDeleteStock=formDeleteStock,
-                               userid=current_user.id, table=table, userStocks=userStocks, userAlertCounts=userAlertCounts )
+                               userid=current_user.id, strAlertsList=strAlertsList, userStocks=userStocks, userAlertCounts=userAlertCounts )
 
 @bp.route('/enterprice/<userid>', methods=['GET', 'POST'])
 @login_required

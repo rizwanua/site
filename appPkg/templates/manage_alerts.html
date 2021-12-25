@@ -9,8 +9,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='static/css/styles.min.css') }}">
 
     <h3>Current alerts set by {{ current_user.username }}:</h3>    
-    {% if table %}
-        {{ table }}
+    {% if strAlertsList %}
+        {{ strAlertsList }}
     {% endif %}
     
     <br><br>

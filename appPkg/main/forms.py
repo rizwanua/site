@@ -3,13 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, FloatField
 from wtforms.validators import ValidationError, DataRequired, Length
 from appPkg.models import Stock, User
-from flask_table import Table, Col
 
-
-class UserStocksTable(Table):
-    symbol = Col('Stock')
-    status = Col('Status')
-    alertPrice  = Col('Alert Price')
     
 class SelectStockForm(FlaskForm):
     submit = SubmitField('Add Stock Alert')
