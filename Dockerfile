@@ -1,4 +1,4 @@
-FROM python:3.7-alpine
+FROM python:slim
 
 RUN useradd stockpricealert
 
@@ -11,7 +11,8 @@ RUN venv/bin/pip install gunicorn
 
 COPY appPkg appPkg
 COPY migrations migrations
-COPY stockpricealert.py config.py 
+COPY stockpricealert.py app.db config.py boot.sh ./
+RUN chmod +x boot.sh
 
 ENV FLASK_APP stockpricealert.py
 
