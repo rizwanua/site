@@ -1,6 +1,6 @@
 {
   "ipcMode": null,
-  "executionRoleArn": "arn:aws:iam::132218450533:role/ECSTaskRole",
+  "executionRoleArn": "arn:aws:iam::132218450533:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
       "dnsSearchDomains": null,
@@ -29,7 +29,7 @@
       "memoryReservation": 1000,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "132218450533.dkr.ecr.us-east-2.amazonaws.com/aws-ecs-spa-ecr",
+      "image": "132218450533.dkr.ecr.us-east-2.amazonaws.com/spa-ecrrepo",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -46,18 +46,18 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "aws-ecs-spa-ecr"
+      "name": "spa-ecrrepo"
     }
   ],
   "placementConstraints": [],
   "memory": null,
-  "taskRoleArn": "arn:aws:iam::132218450533:role/ECSTaskRole",
+  "taskRoleArn": null,
   "compatibilities": [
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-east-2:132218450533:task-definition/aws-ecs-spa-task-definition:3",
-  "family": "aws-ecs-spa-task-definition",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-2:132218450533:task-definition/taskdef-spa:1",
+  "family": "taskdef-spa",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -75,12 +75,6 @@
       "targetId": null,
       "targetType": null,
       "value": null,
-      "name": "com.amazonaws.ecs.capability.task-iam-role"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
       "name": "ecs.capability.execution-role-ecr-pull"
     }
   ],
@@ -91,7 +85,7 @@
   "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 3,
+  "revision": 1,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
