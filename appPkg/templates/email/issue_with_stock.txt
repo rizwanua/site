@@ -1,0 +1,3 @@
+Issue with stock:
+<br>Stock Symbol: {{ stock.symbol }}
+<br>Stock Name: {{ stock.name }}

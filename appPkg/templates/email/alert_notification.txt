@@ -1,0 +1,16 @@
+Dear {{ user.username }},
+
+This email is to inform you that the following alert set on Stock Price Alert has been triggered.
+
+Stock Symbol: {{ stock.symbol }}
+Stock Name: {{ stock.name }}
+Stock Price (when alert set): ${{ alert.priceAtUserInput }}
+Stock Price (current): ${{ stock.lastPrice }}
+Alert Price: ${{ alert.desiredPrice }}
+
+
+Note that the alert will remain visible in your account until it is manually deleted.
+
+Sincerely,
+
+Stock Price Alert

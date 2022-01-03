@@ -1,0 +1,159 @@
+{% extends "base.html" %} 
+{% import 'bootstrap/wtf.html' as wtf %} 
+ 
+{% block app_content %} 
+
+<u><br><br><b><h3>REST API Documentation for Stock Price Alerts</h3></b></u>
+<h4>
+<br>
+The user is able to gain read and write access to Stock Price Alert data using the API provided below.
+<br><br> All API actions requires user authentication. 
+<br>Initially the username and password is required to generate the API auth token, followed by using the auth tokens for all following requests.
+<br> Only the "Create a new user account" action requires no authentication of any kind.
+<br><br>
+<u><b>Notes:</u></b>
+<li>API Auth Tokens are valid for 1 hour.</li>
+<li>Example Requests have been provided for the HTTPie (command line HTTP client) Python library.</li>
+<br>
+Additional APIs to set and delete alerts coming soon! 
+<br><br>
+    <!-- https://www.tablesgenerator.com/html_tables# -->
+     
+    <style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg .tg-cly1{text-align:left;vertical-align:middle}
+    .tg .tg-1bc0{background-color:#dff1f7;font-weight:bold;text-align:left;text-decoration:underline;vertical-align:middle}
+    .tg .tg-yla0{font-weight:bold;text-align:left;vertical-align:middle}
+    </style>
+    
+    <table class="tg">
+    <tbody>
+      <tr>
+        <td class="tg-1bc0">Action</td>
+        <td class="tg-yla0">Create API token for API authentication</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Method Type</td>
+        <td class="tg-cly1">POST</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">URL Endpoint</td>
+        <td class="tg-cly1">https://stockpricealert.net/api/APItokens</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Parameters Required</td>
+        <td class="tg-cly1">username (string)<br>password (string)</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Example Request</td>
+        <td class="tg-cly1">http --auth &lt;username&gt;:&lt;password&gt; POST https://stockpricealert.net/api/APItokens</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Example Return</td>
+        <td class="tg-cly1">"APItoken": "85eXpFcb5mETQcSCLPvnJdBknqjzy4Su"</td>
+      </tr>
+    </tbody>
+    </table>
+    
+    <br>
+    <table class="tg">
+    <tbody>
+      <tr>
+        <td class="tg-1bc0">Action</td>
+        <td class="tg-yla0">Retrieve your user information and existing alerts.</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Method Type</td>
+        <td class="tg-cly1">GET</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">URL Endpoint</td>
+        <td class="tg-cly1">https://stockpricealert.net/api/users/&lt;username&gt;</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Parameters Required</td>
+        <td class="tg-cly1">username(string)<br>Bearer Auth Token</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Example Request</td>
+        <td class="tg-cly1">http GET https://stockpricealert.net/api/users/testUser "Authorization:Bearer 85eXpFcb5mETQcSCLPvnJdBknqjzy4Su"</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Example Return</td>
+        <td class="tg-cly1">{<br>    "data": {<br>        "alertID:12": [<br>            "stockID:4103",<br>            "symbol:DOOO",<br>            "priceAtUserInput:85.22",<br>            "desiredPrice:85.0",<br>            "status:IN PROGRESS"<br>        ],<br>        "alertID:14": [<br>            "stockID:4390",<br>            "symbol:HURN",<br>            "priceAtUserInput:50.27",<br>            "desiredPrice:50.0",<br>            "status:ALERT TRIGGERED"<br>        ]<br>    },<br>    "email": "test@user.com",<br>    "id": 1,<br>    "links": {<br>        "self": "/api/users/testUser"<br>    },<br>    "username": "testUser"<br>}</td>
+      </tr>
+    </tbody>
+    </table>
+    
+    <br>
+    <table class="tg">
+    <tbody>
+      <tr>
+        <td class="tg-1bc0">Action</td>
+        <td class="tg-yla0">Create a new user account.</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Method Type</td>
+        <td class="tg-cly1">POST</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">URL Endpoint</td>
+        <td class="tg-cly1">https://stockpricealert.net/api/users</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Parameters Required</td>
+        <td class="tg-cly1">username (string)<br>password (string)<br>email (string)</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Example Request</td>
+        <td class="tg-cly1">http POST https://stockpricealert.net/api/users username=newUser password=newPassword email=new@email.com</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Example Return</td>
+        <td class="tg-cly1">    "_links": {<br>        "self": "/api/users/newUser"<br>    },<br>    "email": "new@email.com",<br>    "id": 6,<br>    "username": "newUser"</td>
+      </tr>
+    </tbody>
+    </table>     
+    
+    <br>
+    <table class="tg">
+    <tbody>
+      <tr>
+        <td class="tg-1bc0">Action</td>
+        <td class="tg-yla0">Revoke an existing API token</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Method Type</td>
+        <td class="tg-cly1">DELETE</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">URL Endpoint</td>
+        <td class="tg-cly1">https://stockpricealert.net/api/APItokens</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Parameters Required</td>
+        <td class="tg-cly1">Bearer Auth Token</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Example Request</td>
+        <td class="tg-cly1">http DELETE https://stockpricealert.net/APItokens "Authorization:Bearer 85eXpFcb5mETQcSCLPvnJdBknqjzy4Su"</td>
+      </tr>
+      <tr>
+        <td class="tg-1bc0">Example Return</td>
+        <td class="tg-cly1">None.<br>HTTP response code 204 - Successful request but no content.</td>
+      </tr>
+    </tbody>
+    </table>
+</h4>
+
+{% endblock %}
+{% block scripts %} 
+    
+
+{% endblock %} 
+
+

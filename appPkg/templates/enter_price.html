@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+{% import 'bootstrap/wtf.html' as wtf %} 
+ 
+{% block app_content %} 
+
+
+    <h4><p style="color:red;">Current price for {{selectedStock}} is ${{ lastPrice }}.</p></h4><br>
+    <h4>Enter the alert trigger price for the email notification (float numbers only, no '$'). </h4>
+    <h4>Eg: 14.3 </h4>
+    
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(formUserPrice) }}
+        </div>
+    </div>
+    <br>
+
+{% endblock %}
+
+
+{% block scripts %} 
+    
+{% endblock %} 
+
+
+

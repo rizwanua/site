@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+    <br>
+    {% if current_user.is_anonymous %}
+        <b><u><h2>Hello! Please Login or Register.</h2></b></u><br>
+    {% else %}    
+        <b>Logged in as user: {{ current_user.username }}</b>
+    {% endif %}
+    <h4>
+    <u><br><b><h3>Introduction:</h3></b></u>
+    This web app allows a user to create price alerts for stock tickers listed on the NASDAQ Global MarketSM exchange.<br>
+    <br> Users can access: <br>
+    <li><b> About </b> - Includes website details along with the GitHub code repository.</li>
+    <li><b> API Documentation</b> - Provides documentation on API access to interact with the app without a web browser.</li>
+    <li><b> Manage Stock Alerts</b> - (Authenticated Users Only) Allows the user to create a stock price alert. The user will receive an email notification when the stock moves to the desired price.</li>
+    
+    <u><br><b><h3>Using 'Manage Stock Alerts':</h3></b></u>
+    If the current price of TSLA (Tesla Inc) is $1067, <br>
+    <li> The user can select an alert for when the price goes up to a user-defined level such as $1100.</li>
+    <li> Once the real-time price of TSLA reaches or goes above $1100, the user will receive an email notification that the alert has been triggered.</li><br>
+    
+    Alerts can also be set for price drops (eg. if TSLA reaches or goes below a user defined value such as $1000).<br>
+    
+    <u><br><b><h3>Misc Notes:</h3></b></u>
+    <li> This website is intended for educational purposes only and should not be used for live trading.</li>
+    <li> Alerts are checked every 10 minutes. There is a high likelihood that a stock may cross across the desired alert price, then go back up/back down before the email notifier is triggerred.</li>
+    <li> There is a limit of 5 alerts per user.</li>
+    
+    </h4> 
+        
+
+{% endblock %}
