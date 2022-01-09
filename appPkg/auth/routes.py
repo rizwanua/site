@@ -14,6 +14,7 @@ from appPkg.auth import bp
 from appPkg.auth.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
 from appPkg.models import User
 from appPkg.main.syslog import logInfo
+import inspect
 
 @bp.route('/login', methods=['GET', 'POST']) # Default is GET only
 def login():
@@ -26,11 +27,11 @@ def login():
     Redirect webpage
     """
     
+    logInfo(inspect.stack()[0].function, __name__, current_user) # Log page access information
+    
     if current_user.is_authenticated: # Dont want a logged in user to go to the login page again
-        logInfo(f'Login as user {current_user.id}') # Log client information
         return redirect(url_for('main.index')) 
-    else:
-        logInfo(f'Login as anonymous') # Log client information
+    
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -74,12 +75,10 @@ def register():
     HTML template
     Redirect webpage
     """
-   
+    logInfo(inspect.stack()[0].function, __name__, current_user) # Log page access information
+    
     if current_user.is_authenticated:
-        logInfo(f'Register as user {current_user.id}') # Log client information
         return redirect(url_for('index')) # Redirect: Go to index page
-    else:
-        logInfo(f'Register as anonymous') # Log client information
         
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -115,11 +114,11 @@ def reset_password_request():
     HTML template
     Redirect webpage        
     """
+    
+    logInfo(inspect.stack()[0].function, __name__, current_user) # Log page access information
+    
     if current_user.is_authenticated:
-        logInfo(f'Initiate reset password as user {current_user.id}') # Log client information
         return redirect(url_for('main.index'))
-    else:
-        logInfo(f'Initiate reset password as anonymous') # Log client information
         
     form = ResetPasswordRequestForm()
     if form.validate_on_submit():
@@ -146,11 +145,10 @@ def reset_password(token):
     HTML template
     Redirect webpage
     """
+    logInfo(inspect.stack()[0].function, __name__, current_user) # Log page access information
+    
     if current_user.is_authenticated:
-        logInfo(f'Reset password as user {current_user.id}') # Log client information
         return redirect(url_for('main.index'))
-    else:
-        logInfo(f'Reset password anonymous') # Log client information
         
     user = User.verify_reset_password_token(token)
     if not user:

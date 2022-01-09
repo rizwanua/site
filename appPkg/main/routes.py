@@ -14,6 +14,7 @@ from appPkg.models import User, Stock, alertTracker
 from appPkg.main.handlers import tickerInfo
 from appPkg.main.syslog import logInfo
 from datetime import datetime, timedelta
+import inspect
 
 @bp.route('/')
 @bp.route('/index')
@@ -36,10 +37,7 @@ def about():
     -------
     HTML template
     """
-    if current_user.is_authenticated:
-        logInfo(f'About as user {current_user.id}') # Log client information
-    else:
-        logInfo(f'About as anonymous') # Log client information
+    logInfo(inspect.stack()[0].function, __name__, current_user) # Log page access information
         
     return render_template("about.html")
 
@@ -63,7 +61,9 @@ def manage_alerts():
     HTML template
     Redirect webpage
     """   
-    logInfo(f'ManageAlerts as user {current_user.id}') # Log client information
+    
+    logInfo(inspect.stack()[0].function, __name__, current_user) # Log page access information
+    
     formSelectStock = SelectStockForm()
     formDeleteStock = DeleteStockForm()
     strAlertsList, userStocks, userAlertCounts = getUserData() # Get user related alerts data. See "getUserData" for more info
@@ -123,7 +123,9 @@ def enter_price():
     -------
     HTML template
     """
-    logInfo(f'EnterPrice as user {current_user.id}') # Log client information
+    
+    logInfo(inspect.stack()[0].function, __name__, current_user) # Log page access information
+    
     selectedStock = session.get("selectedStock")
     lastPrice = session.get("lastPrice")
     formUserPrice = EnterPriceForm()

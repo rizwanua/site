@@ -8,6 +8,7 @@ from flask import render_template, flash, redirect, url_for, current_app, reques
 from flask_login import current_user, login_required
 from appPkg.api import bp
 from appPkg.main.syslog import logInfo
+import inspect
 
 @bp.route('/apidoc', methods=['GET'])
 def apidocs():
@@ -20,10 +21,9 @@ def apidocs():
         API document HTML.
 
     """
-    if current_user.is_authenticated:
-        logInfo(f'APIdoc as user {current_user.id}') # Log client information
-    else:
-        logInfo(f'APIdoc as anonymous') # Log client information
+    
+    logInfo(inspect.stack()[0].function, __name__, current_user) # Log page access information
+    
        
     return render_template('api/apidoc.html', title='API Documentation')
 
