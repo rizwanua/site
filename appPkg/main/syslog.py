@@ -72,11 +72,13 @@ def upload_file_to_s3(app, file_name, bucket, folder_name=None):
     
     with app.app_context():
         # S3 object_name is file_name
-        object_name = file_name.split('\\')[-1]
+        object_name = file_name.split('/')[-1]
         
         # If folder_name was specified, upload in the folder
         if folder_name is not None:
             object_name = f'{folder_name}/{object_name}'
+        
+        print('file :', file_name, 'bucket :', bucket, 'object:', object_name)
         
         # Upload the file
         try:
@@ -92,8 +94,7 @@ def upload_file_to_s3(app, file_name, bucket, folder_name=None):
             log = logging.getLogger(__name__)
             log.info(e)
             print('ERROR:::: \n', e)
-        
-        
+ 
         
 def backup_logs(app, directory):
     """
@@ -114,8 +115,8 @@ def backup_logs(app, directory):
     with app.app_context():
         
         log_files = [] # Initialize log files to upload         
-        directory  = directory + '\logs' # Set to logs directory
-        
+        directory  = directory + '/logs' # Set to logs directory
+
         # Loop through logs directory, get file modified time, compare to last logTimeCheck
         for file in os.listdir(os.fsencode(directory)):
             filename = os.fsdecode(file)

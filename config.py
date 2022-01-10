@@ -39,7 +39,7 @@ class Config(object):
     PRICE_CHECK_FREQUENCY = 9
     
     # AWS S3 BACKUP FREQUENCY (in seconds)
-    LOG_BACKUP_FREQUENCY = 10 # 1 minute * 60 seconds/min
+    LOG_BACKUP_FREQUENCY = 15 # 15 seconds
     
     # Email configuration to send errors
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
