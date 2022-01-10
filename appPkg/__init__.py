@@ -101,7 +101,7 @@ def create_app(config_class=Config):
         if not os.path.exists('logs'):
             os.mkdir('logs')
         
-        filepath = 'logs/' + str(datetime.now().strftime("%Y%m%d-%H%M%S")) + '_spa.log'
+        filepath = 'logs/' + str(datetime.utcnow().strftime("%Y%m%d-%H%M%S")) + '_spa.log'
         file_handler = RotatingFileHandler(filepath, maxBytes=10000, backupCount=10)
         file_handler.setFormatter(logging.Formatter(
             '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
