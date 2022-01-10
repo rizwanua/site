@@ -78,6 +78,8 @@ def upload_file_to_s3(app, file_name, bucket, folder_name=None):
         if folder_name is not None:
             object_name = f'{folder_name}/{object_name}'
         
+        print('file :', file_name, 'bucket :', bucket, 'object:', object_name)
+        
         # Upload the file
         try:
             s3_client = boto3.client(
@@ -92,11 +94,7 @@ def upload_file_to_s3(app, file_name, bucket, folder_name=None):
             log = logging.getLogger(__name__)
             log.info(e)
             print('ERROR:::: \n', e)
-        
-        log = logging.getLogger(__name__)
-        log.info(file_name, object_name)
-        print('check')
-        
+ 
         
 def backup_logs(app, directory):
     """
@@ -118,7 +116,7 @@ def backup_logs(app, directory):
         
         log_files = [] # Initialize log files to upload         
         directory  = directory + '/logs' # Set to logs directory
-        print('logTimeCheck ', current_app.logTimeCheck)
+
         # Loop through logs directory, get file modified time, compare to last logTimeCheck
         for file in os.listdir(os.fsencode(directory)):
             filename = os.fsdecode(file)
