@@ -6,7 +6,7 @@ The app has been created to demonstrate understanding of back-end web developmen
 ## Tools and tech stack used include:
 - Flask framework in Python 3.8
 - Docker containers
-- Amazon AWS services (EC2/ECR/ECS/RDS-PostgreSQL)
+- Amazon AWS services (EC2/ECR/ECS/S3/RDS-PostgreSQL)
 - GitHub CI/CD deployment actions
 
 Credits to the [Flask Mega-Tutorial by Miguel Grinberg][tutorial]. Some modules of this app (such as login authentication and structuring the API framework) have been re-used from the tutorial with modifications as appropriate.
@@ -28,6 +28,7 @@ While a working prototype has been deployed, the project continues to remain und
 
 **Production Environment**
 - Go through the [Flask to ECS][FlaskToECS] tutorial to setup a domain name, AWS EC2 server, AWS ECR repository for Docker images, AWS ECS container service, PostgreSQL database using AWS RDS, and GitHub Secrets to load the environment variables.
+- Setup an AWS S3 storage bucket for log backup
 - Deploy the app via Docker using GitHub CI/CD actions pipeline to AWS.
 
 
