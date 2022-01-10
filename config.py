@@ -15,6 +15,12 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
     '''
     
+    # AWS access (ie to S3)
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_S3_BUCKET = os.environ.get('AWS_S3_BUCKET')
+    AWS_DEFAULT_REGION = os.environ.get('AWS_DEFAULT_REGION')
+    
     # Database config - For AWS RDS PostgreSQL
     SQLALCHEMY_DATABASE_URI = (
         f'postgresql+psycopg2://{os.environ.get("POSTGRES_USER")}:' +
@@ -32,6 +38,9 @@ class Config(object):
     # CURRENT PRICE CHECK FREQUENCY (in minutes)
     PRICE_CHECK_FREQUENCY = 9
     
+    # AWS S3 BACKUP FREQUENCY (in seconds)
+    LOG_BACKUP_FREQUENCY = 10 # 1 minute * 60 seconds/min
+    
     # Email configuration to send errors
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
@@ -39,3 +48,4 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = [os.environ.get('ADMINS')]
+    

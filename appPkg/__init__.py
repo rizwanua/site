@@ -6,13 +6,14 @@ Description:
 import os
 from config import Config
 
-from flask import Flask, request, current_app 
+from flask import Flask, request, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_apscheduler import APScheduler
+from datetime import datetime, timedelta
 
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
@@ -29,6 +30,7 @@ login.login_view = 'auth.login' # Endpoint name
 login.login_message = ('Please log in to access this page.')
 
 from appPkg.main.handlers import checkAlerts # Placed here to avoid import error for DB
+from appPkg.main.syslog import backup_logs
     
 # Flask Application Factory 
 def create_app(config_class=Config): 
@@ -50,7 +52,7 @@ def create_app(config_class=Config):
     """
     app = Flask (__name__) 
     app.config.from_object(Config) 
- 
+
     # init_app() method invoked on extension instances to bind to the now known application. 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -74,7 +76,7 @@ def create_app(config_class=Config):
     # Register the API blueprint with the application
     from appPkg.api import bp as api_bp
     app.register_blueprint(api_bp, url_prefix='/api')
-    
+
     # Email Log Errors
     if not app.debug: # Only enable email logger when app in production mode
         if app.config['MAIL_SERVER']: 
@@ -110,7 +112,12 @@ def create_app(config_class=Config):
     
     # Start-up APScheduler to check alerts
     with app.app_context():
-        scheduler.add_job(func=checkAlerts, args=[current_app._get_current_object()], trigger='interval', id='job', seconds=app.config['ALERT_CHECK_FREQUENCY'], timezone="UTC")
+        
+        # Initialize logTimeCheck to last year
+        current_app.logTimeCheck = datetime.now() - timedelta(days=365)
+        
+        scheduler.add_job(func=checkAlerts, args=[current_app._get_current_object()], trigger='interval', id='job1', seconds=app.config['ALERT_CHECK_FREQUENCY'], timezone="UTC")
+        scheduler.add_job(func=backup_logs, args=[current_app._get_current_object(), os.getcwd()], trigger='interval', id='job2', seconds=app.config['LOG_BACKUP_FREQUENCY'], timezone="UTC")
         scheduler.start()
         
     return app
